@@ -16,7 +16,7 @@ public class GuessTheNumber {
         int guessNumber = 1;
 
         while (guessNumber <= MAX_GUESSES) {
-            System.out.print("Enter your guess: ");
+            System.out.printf("[Guess %d] Enter your guess: ", guessNumber);
             int guess = scanner.nextInt();
 
             if (guess < randomNumber) {

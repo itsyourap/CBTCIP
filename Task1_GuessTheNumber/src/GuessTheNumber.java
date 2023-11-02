@@ -39,6 +39,7 @@ public class GuessTheNumber {
             System.out.printf("The number was %d\n", randomNumber);
         }
 
+        System.out.printf("You scored %d points out of %d\n", MAX_GUESSES - guessCount + 1, MAX_GUESSES);
         System.out.println("Thank you for playing!");
     }
 }

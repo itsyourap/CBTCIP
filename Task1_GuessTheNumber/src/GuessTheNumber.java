@@ -13,10 +13,10 @@ public class GuessTheNumber {
         System.out.println("Try too guess it!");
         System.out.printf("You have %d tries\n", MAX_GUESSES);
 
-        int guessNumber = 1;
+        int guessCount = 1;
 
-        while (guessNumber <= MAX_GUESSES) {
-            System.out.printf("[Guess %d] Enter your guess: ", guessNumber);
+        while (guessCount <= MAX_GUESSES) {
+            System.out.printf("[Guess %d] Enter your guess: ", guessCount);
             int guess = scanner.nextInt();
 
             if (guess < randomNumber) {
@@ -28,10 +28,10 @@ public class GuessTheNumber {
                 break;
             }
 
-            guessNumber++;
+            guessCount++;
         }
 
-        if (guessNumber > MAX_GUESSES) {
+        if (guessCount > MAX_GUESSES) {
             System.out.println("You ran out of guesses!");
             System.out.printf("The number was %d\n", randomNumber);
         }

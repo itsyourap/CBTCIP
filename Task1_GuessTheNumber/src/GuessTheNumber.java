@@ -33,6 +33,7 @@ public class GuessTheNumber {
 
         if (guessNumber > MAX_GUESSES) {
             System.out.println("You ran out of guesses!");
+            System.out.printf("The number was %d\n", randomNumber);
         }
 
         System.out.println("Thank you for playing!");

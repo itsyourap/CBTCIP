@@ -1,11 +1,14 @@
 import java.util.Scanner;
 
 public class GuessTheNumber {
+    private static final int MIN_RANDOM_NUMBER = 1;
+    private static final int MAX_RANDOM_NUMBER = 100;
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        int randomNumber = (int) (Math.random() * 100) + 1;
-        System.out.println("A random number has been generated between 1 and 100");
+        int randomNumber = (int) (Math.random() * (MAX_RANDOM_NUMBER - MIN_RANDOM_NUMBER + 1) + MIN_RANDOM_NUMBER);
+        System.out.printf("A random number has been generated between %d and %d\n", MIN_RANDOM_NUMBER, MAX_RANDOM_NUMBER);
         System.out.println("Try too guess it!");
         System.out.println("You have unlimited tries");
 

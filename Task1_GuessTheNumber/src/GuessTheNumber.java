@@ -27,6 +27,9 @@ public class GuessTheNumber {
                 System.out.println("Congrats! You guessed the number correctly!");
                 break;
             }
+            if (guess > MAX_RANDOM_NUMBER || guess < MIN_RANDOM_NUMBER) {
+                System.out.printf("Your guess must be between %d and %d\n", MIN_RANDOM_NUMBER, MAX_RANDOM_NUMBER);
+            }
 
             guessCount++;
         }

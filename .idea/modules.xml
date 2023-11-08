@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/CBTC.iml" filepath="$PROJECT_DIR$/CBTC.iml" />
       <module fileurl="file://$PROJECT_DIR$/Task1_GuessTheNumber/Task1_GuessTheNumber.iml" filepath="$PROJECT_DIR$/Task1_GuessTheNumber/Task1_GuessTheNumber.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CBTCIP.iml" filepath="$PROJECT_DIR$/CBTCIP.iml" />
     </modules>
   </component>
 </project>

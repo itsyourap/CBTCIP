@@ -6,6 +6,7 @@ public class GuessTheNumber {
     private static final int MAX_GUESSES = 10;
     private static int randomNumber;
     private static int roundNumber = 0;
+    private static int totalPoints = 0;
     private static Scanner scanner;
 
     public static void main(String[] args) {
@@ -14,7 +15,7 @@ public class GuessTheNumber {
         scanner.close();
     }
 
-    private static void playGame(){
+    private static void playGame() {
         roundNumber++;
         System.out.printf("Round %d\n", roundNumber);
         System.out.println("---------------------------------");
@@ -29,7 +30,8 @@ public class GuessTheNumber {
             System.out.printf("[Guess %d] Enter your guess: ", guessCount);
             int guess = scanner.nextInt();
             if (checkGuess(guess)) {
-                int point =  MAX_GUESSES - guessCount + 1;
+                int point = MAX_GUESSES - guessCount + 1;
+                totalPoints += point;
                 System.out.printf("You scored %d points out of %d\n", point, MAX_GUESSES);
                 break;
             }
@@ -48,8 +50,10 @@ public class GuessTheNumber {
         System.out.println();
         if (playAgain.equalsIgnoreCase("yes") || playAgain.equalsIgnoreCase("y"))
             playGame();
-        else
-           System.out.println("Thanks for playing!");
+        else {
+            displayTotalPoints();
+            System.out.println("Thanks for playing!");
+        }
     }
 
     private static boolean checkGuess(int guess) {
@@ -72,5 +76,9 @@ public class GuessTheNumber {
         randomNumber = (int) (Math.random() * (MAX_RANDOM_NUMBER - MIN_RANDOM_NUMBER + 1)) + MIN_RANDOM_NUMBER;
         System.out.printf("A random number has been generated between %d and %d", MIN_RANDOM_NUMBER, MAX_RANDOM_NUMBER);
         System.out.println();
+    }
+
+    private static void displayTotalPoints() {
+        System.out.printf("You scored total %d points out of %d\n", totalPoints, MAX_GUESSES * roundNumber);
     }
 }

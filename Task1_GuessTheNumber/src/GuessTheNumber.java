@@ -4,12 +4,17 @@ public class GuessTheNumber {
     private static final int MIN_RANDOM_NUMBER = 1;
     private static final int MAX_RANDOM_NUMBER = 100;
     private static final int MAX_GUESSES = 10;
+    private static int randomNumber;
+    private static Scanner scanner;
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        scanner = new Scanner(System.in);
+        playGame();
+        scanner.close();
+    }
 
-        int randomNumber = (int) (Math.random() * (MAX_RANDOM_NUMBER - MIN_RANDOM_NUMBER + 1) + MIN_RANDOM_NUMBER);
-        System.out.printf("A random number has been generated between %d and %d\n", MIN_RANDOM_NUMBER, MAX_RANDOM_NUMBER);
+    private static void playGame(){
+        renewRandomNumber();
         System.out.println("Try too guess it!");
         System.out.printf("You have %d tries\n", MAX_GUESSES);
 
@@ -40,6 +45,19 @@ public class GuessTheNumber {
         }
 
         System.out.printf("You scored %d points out of %d\n", MAX_GUESSES - guessCount + 1, MAX_GUESSES);
-        System.out.println("Thank you for playing!");
+
+        System.out.print("Do you want to play another round? [yes (y) / no (n)] [default: no] : ");
+        String playAgain = scanner.next();
+        System.out.println();
+        if (playAgain.equalsIgnoreCase("yes") || playAgain.equalsIgnoreCase("y"))
+            playGame();
+        else
+           System.out.println("Thanks for playing!");
+    }
+
+    private static void renewRandomNumber() {
+        randomNumber = (int) (Math.random() * (MAX_RANDOM_NUMBER - MIN_RANDOM_NUMBER + 1)) + MIN_RANDOM_NUMBER;
+        System.out.printf("A random number has been generated between %d and %d", MIN_RANDOM_NUMBER, MAX_RANDOM_NUMBER);
+        System.out.println();
     }
 }

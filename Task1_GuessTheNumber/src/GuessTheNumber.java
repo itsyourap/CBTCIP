@@ -15,7 +15,7 @@ public class GuessTheNumber {
 
     private static void playGame(){
         renewRandomNumber();
-        System.out.println("Try too guess it!");
+        System.out.println("Try to guess it!");
         System.out.printf("You have %d tries\n", MAX_GUESSES);
 
         int guessCount = 1;

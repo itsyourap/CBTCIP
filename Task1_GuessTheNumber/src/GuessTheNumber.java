@@ -28,19 +28,12 @@ public class GuessTheNumber {
         while (guessCount <= MAX_GUESSES) {
             System.out.printf("[Guess %d] Enter your guess: ", guessCount);
             int guess = scanner.nextInt();
-
-            if (guess < randomNumber) {
-                System.out.println("Your guess is too low!");
-            } else if (guess > randomNumber) {
-                System.out.println("Your guess is too high!");
-            } else {
-                System.out.println("Congrats! You guessed the number correctly!");
+            if (checkGuess(guess)) {
+                int point =  MAX_GUESSES - guessCount + 1;
+                System.out.printf("You scored %d points out of %d\n", point, MAX_GUESSES);
                 break;
             }
-            if (guess > MAX_RANDOM_NUMBER || guess < MIN_RANDOM_NUMBER) {
-                System.out.printf("Your guess must be between %d and %d\n", MIN_RANDOM_NUMBER, MAX_RANDOM_NUMBER);
-            }
-
+            System.out.printf("You have %d guesses left\n\n", MAX_GUESSES - guessCount);
             guessCount++;
         }
 
@@ -49,8 +42,7 @@ public class GuessTheNumber {
             System.out.printf("The number was %d\n", randomNumber);
         }
 
-        System.out.printf("You scored %d points out of %d\n", MAX_GUESSES - guessCount + 1, MAX_GUESSES);
-
+        System.out.println("---------------------------------\n");
         System.out.print("Do you want to play another round? [yes (y) / no (n)] [default: no] : ");
         String playAgain = scanner.next();
         System.out.println();
@@ -58,6 +50,22 @@ public class GuessTheNumber {
             playGame();
         else
            System.out.println("Thanks for playing!");
+    }
+
+    private static boolean checkGuess(int guess) {
+        if (guess < MIN_RANDOM_NUMBER || guess > MAX_RANDOM_NUMBER) {
+            System.out.printf("Your guess should be between %d and %d\n", MIN_RANDOM_NUMBER, MAX_RANDOM_NUMBER);
+            return false;
+        }
+
+        if (guess == randomNumber) {
+            System.out.println("Congrats! You guessed the number correctly!");
+            return true;
+        } else if (guess > randomNumber)
+            System.out.println("Your guess is too high!");
+        else
+            System.out.println("Your guess is too low!");
+        return false;
     }
 
     private static void renewRandomNumber() {

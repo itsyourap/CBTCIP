@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/CBTC.iml" filepath="$PROJECT_DIR$/CBTC.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CBTCIP.iml" filepath="$PROJECT_DIR$/CBTCIP.iml" />
     </modules>
   </component>
 </project>

@@ -5,6 +5,7 @@ public class GuessTheNumber {
     private static final int MAX_RANDOM_NUMBER = 100;
     private static final int MAX_GUESSES = 10;
     private static int randomNumber;
+    private static int roundNumber = 0;
     private static Scanner scanner;
 
     public static void main(String[] args) {
@@ -14,6 +15,10 @@ public class GuessTheNumber {
     }
 
     private static void playGame(){
+        roundNumber++;
+        System.out.printf("Round %d\n", roundNumber);
+        System.out.println("---------------------------------");
+
         renewRandomNumber();
         System.out.println("Try to guess it!");
         System.out.printf("You have %d tries\n", MAX_GUESSES);

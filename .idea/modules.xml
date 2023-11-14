@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CBTCIP.iml" filepath="$PROJECT_DIR$/CBTCIP.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Task2_ATM/Task2_ATM.iml" filepath="$PROJECT_DIR$/Task2_ATM/Task2_ATM.iml" />
     </modules>
   </component>
 </project>

@@ -103,7 +103,34 @@ public class DatabaseManager {
     }
 
     public ArrayList<TransactionModel> getTransactionHistory(AccountModel account) {
-        // TODO: Implement Retrieving Transaction History
-        return null;
+        ArrayList<TransactionModel> transactionList = new ArrayList<>();
+
+        try (PreparedStatement stmt = conn.prepareStatement(
+                "SELECT t.id, t.account_id, tt.transaction_type, t.amount, t.other_party_account_id " +
+                        "FROM transactions t " +
+                        "LEFT JOIN transaction_type tt ON t.transaction_type = tt.id " +
+                        "WHERE t.account_id = ?"
+        )
+        ) {
+
+            stmt.setLong(1, account.getId());
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                TransactionModel transaction = new TransactionModel();
+                transaction.setId(rs.getLong("id"));
+                transaction.setAccountId(rs.getLong("account_id"));
+                transaction.setTransactionType(TransactionModel.TransactionType.valueOf(
+                        rs.getString("transaction_type")
+                ));
+                transaction.setAmount(rs.getDouble("amount"));
+                transaction.setOtherPartyAccountId(rs.getInt("other_party_account_id"));
+                transactionList.add(transaction);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error retrieving transaction history: " + e.getMessage());
+        }
+
+        return transactionList;
     }
 }

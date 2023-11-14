@@ -1,10 +1,13 @@
 package model;
 
+import java.util.ArrayList;
+
 public class AccountModel {
     private long id;
     private String userId;
     private String userName;
     private double balance;
+    private ArrayList<TransactionModel> transactions;
 
     public AccountModel() {
 
@@ -47,5 +50,31 @@ public class AccountModel {
 
     public void setBalance(double balance) {
         this.balance = balance;
+    }
+
+    public ArrayList<TransactionModel> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(ArrayList<TransactionModel> transactions) {
+        this.transactions = transactions;
+    }
+
+    public void addTransaction(TransactionModel transaction) {
+        if (this.transactions == null)
+            setTransactions(new ArrayList<>());
+
+        this.transactions.add(transaction);
+    }
+
+    @Override
+    public String toString() {
+        return "AccountModel{" +
+                "id=" + id +
+                ", userId='" + userId + '\'' +
+                ", userName='" + userName + '\'' +
+                ", balance=" + balance +
+                ", transactions=" + transactions +
+                '}';
     }
 }

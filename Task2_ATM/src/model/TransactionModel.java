@@ -65,4 +65,15 @@ public class TransactionModel {
     public void setOtherPartyAccountId(long otherPartyAccountId) {
         this.otherPartyAccountId = otherPartyAccountId;
     }
+
+    @Override
+    public String toString() {
+        return "TransactionModel{" +
+                "id=" + id +
+                ", accountId=" + accountId +
+                ", transactionType=" + transactionType +
+                ", amount=" + amount +
+                ", otherPartyAccountId=" + otherPartyAccountId +
+                '}';
+    }
 }

@@ -2,10 +2,20 @@ package model;
 
 public class TransactionModel {
     public enum TransactionType {
-        DEPOSIT,
-        WITHDRAW,
-        TRANSFER_DEPOSIT,
-        TRANSFER_WITHDRAW
+        DEPOSIT(1),
+        WITHDRAW(2),
+        TRANSFER_DEPOSIT(3),
+        TRANSFER_WITHDRAW(4);
+
+        private final int value;
+
+        TransactionType(int i) {
+            this.value = i;
+        }
+
+        public int getValue() {
+            return value;
+        }
     }
 
     private long id;

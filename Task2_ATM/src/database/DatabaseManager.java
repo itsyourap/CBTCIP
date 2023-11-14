@@ -100,7 +100,7 @@ public class DatabaseManager {
                 account = new AccountModel();
                 account.setId(rs.getInt("id"));
                 account.setUserId(rs.getString("user_id"));
-                account.setUserName( rs.getString("user_name"));
+                account.setUserName(rs.getString("user_name"));
                 account.setBalance(rs.getDouble("balance"));
                 account.setTransactions(getTransactionHistory(account));
             }
@@ -122,7 +122,7 @@ public class DatabaseManager {
                 account = new AccountModel();
                 account.setId(rs.getInt("id"));
                 account.setUserId(rs.getString("user_id"));
-                account.setUserName( rs.getString("user_name"));
+                account.setUserName(rs.getString("user_name"));
                 account.setBalance(rs.getDouble("balance"));
                 account.setTransactions(getTransactionHistory(account));
             }
@@ -133,8 +133,62 @@ public class DatabaseManager {
     }
 
     public boolean addTransaction(TransactionModel transaction) {
-        // TODO: Implement Add Transaction Logic
-        return false;
+        String operation;
+        if (
+                transaction.getTransactionType() == TransactionModel.TransactionType.DEPOSIT ||
+                        transaction.getTransactionType() == TransactionModel.TransactionType.TRANSFER_DEPOSIT
+        )
+            operation = "+";
+        else
+            operation = "-";
+
+        try {
+            conn.setAutoCommit(false);
+
+            PreparedStatement addTransactionStatement =
+                    conn.prepareStatement(
+                            "INSERT INTO " +
+                                    "transactions (account_id, transaction_type, amount, other_party_account_id) " +
+                                    "VALUES (?, ?, ?, ?)"
+                    );
+
+            addTransactionStatement.setLong(1, transaction.getAccountId());
+            addTransactionStatement.setInt(2, transaction.getTransactionType().getValue());
+            addTransactionStatement.setDouble(3, transaction.getAmount());
+            if (transaction.getOtherPartyAccountId() != 0)
+                addTransactionStatement.setLong(4, transaction.getOtherPartyAccountId());
+            else
+                addTransactionStatement.setNull(4, Types.INTEGER);
+
+            addTransactionStatement.executeUpdate();
+            ResultSet rs = conn.prepareStatement("SELECT last_insert_rowid() AS id;").executeQuery();
+            if (rs.next())
+                transaction.setId(rs.getLong("id"));
+
+
+            PreparedStatement balanceUpdateStatement = conn.prepareStatement(
+                    "UPDATE accounts SET balance = balance " + operation + " ? WHERE id = ?"
+            );
+            balanceUpdateStatement.setDouble(1, transaction.getAmount());
+            balanceUpdateStatement.setLong(2, transaction.getAccountId());
+            balanceUpdateStatement.executeUpdate();
+            conn.commit();
+
+            if (transaction.getTransactionType() == TransactionModel.TransactionType.TRANSFER_WITHDRAW){
+                TransactionModel counterTransaction = new TransactionModel();
+                counterTransaction.setAccountId(transaction.getOtherPartyAccountId());
+                counterTransaction.setAmount(transaction.getAmount());
+                counterTransaction.setTransactionType(TransactionModel.TransactionType.TRANSFER_DEPOSIT);
+                counterTransaction.setOtherPartyAccountId(transaction.getAccountId());
+
+                return addTransaction(counterTransaction);
+            }
+
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Error in attempting transaction: " + e.getMessage());
+            return false;
+        }
     }
 
     public ArrayList<TransactionModel> getTransactionHistory(AccountModel account) {

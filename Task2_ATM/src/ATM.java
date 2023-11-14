@@ -5,13 +5,40 @@ import model.TransactionModel;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * This is the main class of the ATM application.
+ * It is responsible for the following:
+ * 1. Getting user input for User ID and PIN
+ * 2. Validating the User ID and PIN
+ * 3. Displaying the main menu
+ * 4. Getting user input for the main menu
+ * 5. Performing the selected action
+ * 6. Displaying the result of the action
+ * 7. Returning to the main menu
+ * 8. Exiting the application
+ * <p>
+ * The main menu has the following options:
+ * 1. Withdraw
+ * 2. Deposit
+ * 3. Transfer
+ * 4. Show Transaction History
+ * 5. Exit
+ * <p>
+ * The ATM application uses the DatabaseManager class to interact with the database.
+ *
+ * @author <a href="https://github.com/itsyourap">Ankan Pal</a>
+ */
 public class ATM {
+    // The current account that is logged in
     private static AccountModel currentAccount = null;
+
+    // The DatabaseManager instance
     private static final DatabaseManager dbManager = DatabaseManager.getInstance();
+
+    // The Scanner instance
     private static final Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
-
         System.out.println("Welcome to itsyourap's ATM");
         System.out.println("---------------------------");
         System.out.print("Please Enter User ID: ");
@@ -70,7 +97,16 @@ public class ATM {
         sc.close();
     }
 
-    private static void withdrawCash(){
+    // The following methods are private helper methods that are used in the main method
+
+    /**
+     * This method is used to withdraw cash from the current account.
+     * It asks the user for the amount to withdraw and then creates a TransactionModel object.
+     * The TransactionModel object is then added to the current account.
+     * If the transaction is successful, the amount is deducted from the current account's balance.
+     * If the transaction is unsuccessful, the amount is not deducted from the current account's balance.
+     */
+    private static void withdrawCash() {
         System.out.print("Enter amount to withdraw: ");
         double amount = sc.nextDouble();
         if (amount > currentAccount.getBalance()) {
@@ -81,7 +117,7 @@ public class ATM {
         withdrawTransaction.setAmount(amount);
         withdrawTransaction.setTransactionType(TransactionModel.TransactionType.WITHDRAW);
         withdrawTransaction.setAccountId(currentAccount.getId());
-        if (currentAccount.addTransaction(withdrawTransaction)){
+        if (currentAccount.addTransaction(withdrawTransaction)) {
             System.out.println("Withdraw successful");
             System.out.println("Please collect your cash");
         } else {
@@ -89,7 +125,14 @@ public class ATM {
         }
     }
 
-    private static void depositCash(){
+    /**
+     * This method is used to deposit cash into the current account.
+     * It asks the user for the amount to deposit and then creates a TransactionModel object.
+     * The TransactionModel object is then added to the current account.
+     * If the transaction is successful, the amount is added to the current account's balance.
+     * If the transaction is unsuccessful, the amount is not added to the current account's balance.
+     */
+    private static void depositCash() {
         System.out.print("Enter amount to deposit: ");
         double amount = sc.nextDouble();
         TransactionModel depositTransaction = new TransactionModel();
@@ -102,7 +145,16 @@ public class ATM {
             System.out.println("Deposit failed");
     }
 
-    private static void transferMoney(){
+    /**
+     * This method is used to transfer cash from the current account to another account.
+     * It asks the user for the User ID of the recipient and the amount to transfer.
+     * It then creates two TransactionModel objects.
+     * The first TransactionModel object is added to the current account.
+     * The second TransactionModel object is added to the recipient's account.
+     * If both transactions are successful, the amount is deducted from the current account's balance.
+     * If both transactions are unsuccessful, the amount is not deducted from the current account's balance.
+     */
+    private static void transferMoney() {
         System.out.print("Enter User ID of recipient: ");
         String recipientId = sc.next();
         AccountModel recipientAccount = dbManager.getAccount(recipientId);
@@ -127,7 +179,18 @@ public class ATM {
             System.out.println("Transfer failed");
     }
 
-    private static void showTransactionHistory(){
+    /**
+     * This method is used to show the transaction history of the current account.
+     * It gets the transaction history of the current account and then displays it.
+     * The transaction history is displayed in reverse chronological order.
+     * The transaction history is displayed in the following format:
+     * Transaction History
+     * ---------------------------
+     * WITHDRAW
+     * Amount: 1000.0
+     *
+     */
+    private static void showTransactionHistory() {
         System.out.println("Transaction History");
         System.out.println("---------------------------");
         ArrayList<TransactionModel> transactionHistory = currentAccount.getTransactions();

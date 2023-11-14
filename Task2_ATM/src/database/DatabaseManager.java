@@ -88,13 +88,48 @@ public class DatabaseManager {
     }
 
     public AccountModel getAccount(String userId, int userPin) {
-        // TODO: Get Account Details from userId and PIN
-        return null;
+        String query = "SELECT id, user_id, user_name, balance FROM accounts WHERE user_id = ? AND user_pin = ?";
+        AccountModel account = null;
+
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, userId);
+            stmt.setInt(2, userPin);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                account = new AccountModel();
+                account.setId(rs.getInt("id"));
+                account.setUserId(rs.getString("user_id"));
+                account.setUserName( rs.getString("user_name"));
+                account.setBalance(rs.getDouble("balance"));
+                account.setTransactions(getTransactionHistory(account));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error retrieving account: " + e.getMessage());
+        }
+        return account;
     }
 
     public AccountModel getAccount(String userId) {
-        // TODO: Get Account Details from userId
-        return null;
+        String query = "SELECT id, user_id, user_name, balance FROM accounts WHERE user_id = ?";
+        AccountModel account = null;
+
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, userId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                account = new AccountModel();
+                account.setId(rs.getInt("id"));
+                account.setUserId(rs.getString("user_id"));
+                account.setUserName( rs.getString("user_name"));
+                account.setBalance(rs.getDouble("balance"));
+                account.setTransactions(getTransactionHistory(account));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error retrieving account: " + e.getMessage());
+        }
+        return account;
     }
 
     public boolean addTransaction(TransactionModel transaction) {

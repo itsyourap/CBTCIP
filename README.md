@@ -12,7 +12,7 @@ Table of contents
     * [How to run](#how-to-run)
 
 
-* [Task 2: ATM Application](#task-2--atm-application)
+* [Task 2: ATM Application](#task-2-atm-application)
     * [Description](#description-1)
     * [How to run](#how-to-run-1)
 

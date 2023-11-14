@@ -132,6 +132,28 @@ public class DatabaseManager {
         return account;
     }
 
+    public AccountModel getAccount(long accountId) {
+        String query = "SELECT id, user_id, user_name, balance FROM accounts WHERE id = ?";
+        AccountModel account = null;
+
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setLong(1, accountId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                account = new AccountModel();
+                account.setId(rs.getInt("id"));
+                account.setUserId(rs.getString("user_id"));
+                account.setUserName(rs.getString("user_name"));
+                account.setBalance(rs.getDouble("balance"));
+                account.setTransactions(getTransactionHistory(account));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error retrieving account: " + e.getMessage());
+        }
+        return account;
+    }
+
     public boolean addTransaction(TransactionModel transaction) {
         String operation;
         if (

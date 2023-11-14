@@ -1,5 +1,7 @@
 package model;
 
+import database.DatabaseManager;
+
 import java.util.ArrayList;
 
 public class AccountModel {
@@ -11,13 +13,6 @@ public class AccountModel {
 
     public AccountModel() {
 
-    }
-
-    public AccountModel(long id, String userId, String userName, double balance) {
-        this.id = id;
-        this.userId = userId;
-        this.userName = userName;
-        this.balance = balance;
     }
 
     public long getId() {
@@ -60,11 +55,22 @@ public class AccountModel {
         this.transactions = transactions;
     }
 
-    public void addTransaction(TransactionModel transaction) {
+    public boolean addTransaction(TransactionModel transaction) {
         if (this.transactions == null)
             setTransactions(new ArrayList<>());
 
-        this.transactions.add(transaction);
+        if (DatabaseManager.getInstance().addTransaction(transaction)) {
+            if (transaction.getTransactionType() == TransactionModel.TransactionType.WITHDRAW ||
+                    transaction.getTransactionType() == TransactionModel.TransactionType.TRANSFER_WITHDRAW)
+                this.balance -= transaction.getAmount();
+            else
+                this.balance += transaction.getAmount();
+
+            this.transactions.add(transaction);
+            return true;
+        }
+
+        return false;
     }
 
     @Override

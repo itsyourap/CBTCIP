@@ -8,21 +8,25 @@ import java.util.Scanner;
 /**
  * This is the main class of the ATM application.
  * It is responsible for the following:
- * 1. Getting user input for User ID and PIN
- * 2. Validating the User ID and PIN
- * 3. Displaying the main menu
- * 4. Getting user input for the main menu
- * 5. Performing the selected action
- * 6. Displaying the result of the action
- * 7. Returning to the main menu
- * 8. Exiting the application
+ * <ol>
+ * <li>Getting user input for User ID and PIN</li>
+ * <li>Validating the User ID and PIN</li>
+ * <li>Displaying the main menu</li>
+ * <li>Getting user input for the main menu</li>
+ * <li>Performing the selected action</li>
+ * <li>Displaying the result of the action</li>
+ * <li>Returning to the main menu</li>
+ * <li>Exiting the application</li>
+ * </ol>
  * <p>
  * The main menu has the following options:
- * 1. Withdraw
- * 2. Deposit
- * 3. Transfer
- * 4. Show Transaction History
- * 5. Exit
+ * <ol>
+ * <li>Withdraw</li>
+ * <li>Deposit</li>
+ * <li>Transfer</li>
+ * <li>Show Transaction History</li>
+ * <li>Exit</li>
+ * </ol>
  * <p>
  * The ATM application uses the DatabaseManager class to interact with the database.
  *

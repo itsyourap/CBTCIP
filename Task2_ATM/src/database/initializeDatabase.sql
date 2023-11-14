@@ -7,18 +7,11 @@ CREATE TABLE IF NOT EXISTS accounts
     balance  INTEGER NOT NULL
 );
 
-
-INSERT OR IGNORE INTO accounts (user_id, user_pin, user_name, balance)
-VALUES ('test01', 1234, 'Test User 01', 800),
-       ('test02', 5678, 'Test User 02', 1000);
-
-
 CREATE TABLE IF NOT EXISTS transaction_type
 (
     id               INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     transaction_type TEXT                              NOT NULL
 );
-
 
 INSERT OR IGNORE INTO transaction_type (transaction_type)
 VALUES ('DEPOSIT'),
@@ -37,6 +30,12 @@ CREATE TABLE IF NOT EXISTS transactions
     FOREIGN KEY (transaction_type) REFERENCES transaction_type (id),
     FOREIGN KEY (other_party_account_id) REFERENCES accounts (id)
 );
+
+
+--+ SAMPLE DATA +--
+INSERT OR IGNORE INTO accounts (user_id, user_pin, user_name, balance)
+VALUES ('test01', 1234, 'Test User 01', 800),
+       ('test02', 5678, 'Test User 02', 1000);
 
 INSERT OR IGNORE INTO transactions (account_id, transaction_type, amount, other_party_account_id)
 VALUES (1, 1, 500, NULL),
